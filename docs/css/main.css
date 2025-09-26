@@ -15,7 +15,7 @@
   }
   
   .banner {
-    background: url('../assets/img/headers/blurred_mini_header.jpeg') no-repeat center center;
+    background: url('../assets/img/headers/header-1920x1080.jpeg') no-repeat center center;
     background-size: cover;
     background-position: center bottom;
     width: 100%;
@@ -26,14 +26,6 @@
     border-radius: 0 0 4.2% 4.2%;
     transform: translateZ(0);             /* Forza l'accelerazione hardware */
     position: relative;                   /* Per posizionamento del logo */
-    filter: blur(20px);                   /* Inizia con il blur */
-    transition: filter 0.5s ease;        /* Transizione per il deblur */
-  }
-
-  /* Stato quando l'immagine HD è caricata */
-  .banner.hd-loaded {
-    background-image: url('../assets/img/headers/header-1920x1080.jpeg');
-    filter: none;                         /* Rimuovi il blur */
   }
 
 
