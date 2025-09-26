@@ -1,0 +1,450 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Ottimizzazione caricamento contenuto critico */
+  html {
+    font-display: swap; /* Migliora caricamento font */
+  }
+  
+  body, h1, h2, h3, h4, h5, h6, p, a, button {
+    font-family: 'Poppins', sans-serif;
+    color: #555454;
+  }
+  
+  .banner {
+    background: url('../assets/img/headers/header-1920x1080.jpeg') no-repeat center center;
+    background-size: cover;
+    background-position: center bottom;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    border-radius: 0 0 4.2% 4.2%;
+    transform: translateZ(0);             /* Forza l'accelerazione hardware */
+    position: relative;                   /* Per posizionamento del logo */
+  }
+
+
+  .logo-animation {                       /* Logo animato sopra il banner */
+    position: absolute;
+    top: 30%; 
+    left: 50%;
+    transform: translateX(-50%) scale(1.15);
+    opacity: 0;                           /* Inizialmente trasparente */
+    width: 500px;                         /* Dimensione finale  */
+    height: auto;
+    z-index: 10;
+    transition: all 0.8s ease-out;        /* durata */
+    will-change: transform, opacity;
+  }
+
+ 
+  .logo-animation.show {                  /* Stato finale del logo  */
+    transform: translateX(-50%) scale(1); /* Dimensione normale */
+    opacity: 1;                           /* Completamente visibile */
+  }
+
+
+  @media (max-width: 768px) { 
+    .logo-animation {
+      width: 300px;                       /* Più piccolo su mobile */
+      top: 18%;
+    }
+    
+    .logo-animation.show {
+      transform: translateX(-50%) scale(1.1);
+    }
+  }                                       /* Fine logo animato */
+  
+  .grid-item {
+    height: 100%; /* prende sempre tutta l'altezza disponibile dal .col */
+    min-height: 160px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+    border: 3px solid #3BD2C9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* centram. verticale */
+    text-align: center;
+    transition: transform 0.15s ease-out, background-color 0.15s ease-out;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+
+  .bott-grid-item {
+    height: 100%; /* prende sempre tutta l'altezza disponibile dal .col */
+    min-height: 50px;
+    background-color: #f9f9f9;
+    border-radius:  80px;
+    padding: 20px;
+    box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+    border: 3px solid #3BD2C9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* centram. verticale */
+    text-align: center;
+    transition: transform 0.15s ease-out, background-color 0.15s ease-out;
+    touch-action: manipulation;
+    will-change: transform;
+  }
+  
+  
+  /* touch mobile */
+  .grid-item:active {
+    transform: scale(0.97);
+    background-color: #e6f9f8;
+  }
+  
+  .grid-item:hover {
+    transform: scale(1.03);
+  }
+  
+  .grid-item img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+  
+  .grid-item h2 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+  .flip-card {
+  perspective: 1000px;
+  cursor: pointer;
+  height: 100%;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.flip-card-front {
+  background-color: #f9f9f9;
+  z-index: 2;
+  flex-direction: row-reverse; /* metti orizzontale */
+  justify-content: flex-start; /* allinea da sinistra */
+  text-align: left;
+  padding: 0; /* togli padding per usare solo padding nei figli */
+  gap: 20px;
+}
+
+.flip-card-front .img-left {
+  width: 40%;
+  height: 95%;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  /* rimuovi margini se ci sono */
+  margin: 0;
+  margin-right: 1%;
+}
+
+.center-img {
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  /* rimuovi margini se ci sono */
+  margin: 0;
+  margin-right: 1%;
+}
+
+.flip-card-front .text-box {
+  width: 50%;
+  height: 100%;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/*back*/
+
+.flip-card-back {
+  background-color: #f9f9f9;
+  transform: rotateY(180deg);
+  display: flex;
+  justify-content: flex-start; /* testo a sinistra */
+  text-align: left;
+  padding: 0; /* gestione padding nei figli */
+  gap: 20px;
+}
+
+.flip-card-back .img-left {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  margin: 0;
+  margin-right: 15px; /* margine destro stavolta */
+}
+
+.flip-card-back .text-box {
+  height: 100%;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.typerest {
+  font-size: 20px;
+  color: #3BD2C9;
+  font-style: italic;
+}
+
+/* .guide-box {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.4em;
+} */
+
+
+.guide-box {
+  /* background-color: #f9f9f9; */
+  color: #888888;
+  border-radius: 10px;
+  padding: 16px;
+  max-width: 90%;
+  margin: 20px auto;
+  font-size: 14px;
+  line-height: 1.6;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.florence-zone-section {
+  margin-bottom: 3rem;
+}
+
+.florence-zone-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #4a4a4a;
+}
+
+.florence-place-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.florence-place-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.florence-place-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.florence-place-type {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* === License css === */
+
+#attribution-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  max-height: 400px;
+  overflow-y: auto;
+  transition: max-height 0.3s ease;
+}
+
+.license-btn {
+  width: 100%;
+  background-color: white;
+  border: 2px solid #3BD2C9;
+  color: #3BD2C9;
+  font-weight: bold;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* ✅ Colori FISSI */
+#toggle-attribution {
+  background-color: white;
+  color: #3BD2C9;
+  border: 2px solid #3BD2C9;
+}
+
+/* ✅ Hover con contrasto visibile */
+#toggle-attribution:hover {
+  border: 2px solid #3BD2C9;
+  background-color: white;
+  color: #3BD2C9;
+}
+
+/* ✅ Testo flessibile senza allargare bottone */
+#toggle-text {
+  /* flex-grow: 1; */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ✅ Icona che ruota */
+.arrow-down {
+  transition: transform 0.3s ease;
+}
+
+.arrow-up {
+  transform: rotate(180deg);
+}
+
+.inline-icon {
+  height: 1em;
+  vertical-align: -0.15em;
+}
+
+/* Box nascosto/stilizzato */
+/* Box nascosto/stilizzato */
+.info-box {
+  background-color: #f2f2f2; /* grigio chiaro */
+  padding: 15px 20px;
+  border-radius: 20px; /* come i bottoni */
+  margin-top: 10px;
+  font-family: Arial, sans-serif;
+  border: 2px solid #3BD2C9; /* aggiunge il bordo come i bottoni */
+  box-sizing: border-box;
+}
+
+.info-box ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.info-box li {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.info-box .icon {
+  margin-right: 8px;
+}
+
+/* Nasconde il box all’avvio */
+.hidden {
+  display: none;
+}
+
+/* Bottone dettagli simile al tuo license-btn */
+.toggle-btn {
+  width: 100%;
+  background-color: white;
+  border: 2px solid #3BD2C9;
+  color: #3BD2C9;
+  font-weight: bold;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Hover bottone */
+.toggle-btn:hover {
+  background-color: white;
+  color: #3BD2C9;
+  border: 2px solid #3BD2C9;
+}
+
+/* Icona che ruota */
+.arrow-down {
+  transition: transform 0.3s ease;
+}
+
+.arrow-up {
+  transform: rotate(180deg);
+}
+
+/* Icona inline all’interno del testo */
+.inline-icon {
+  height: 1em;
+  vertical-align: -0.15em;
+}
+
+/* Progressive Image Loading */
+.lqip-loading {
+  filter: blur(20px);
+  transition: filter 0.5s ease;
+}
+
+/* Classi rimosse - gestione tramite JavaScript per evitare conflitti di rendering */
+
+/* Miglioramento performance per immagini */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* Fallback per browser senza intersection observer */
+.no-js img[data-src] {
+  display: none;
+}
+
+

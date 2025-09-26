@@ -1,0 +1,545 @@
+/* === Global === */
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #555454;
+  background: #fff;
+  margin: 0;
+  line-height: 1.6;
+  padding-top: 80px;
+}
+
+h1, h2, h3, h4, h5, h6, a, button {
+  font-family: 'Poppins', sans-serif;
+  color: #555454;
+  background: #fff;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* === header logo === */
+.menu-header {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  background: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.menu-header img {
+  height: auto;             
+  max-height: 60px;         
+  width: auto;             
+  max-width: 100%;         
+  object-fit: contain;     
+}
+
+
+/* === Page container === */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+  margin-top: 50px;
+}
+
+/* === Headings === */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* === GALLERY === */
+.gallery {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 20px 0;
+  border-radius: 12px;
+}
+
+.gallery-track-container {
+  overflow: hidden;
+}
+
+.gallery-track {
+  display: flex;
+  transition: transform 0.3s ease;
+  will-change: transform;
+  align-items: center; 
+  height: 400px;
+}
+
+.gallery-slide {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease-in-out;
+  height: 100%; 
+}
+
+.gallery-slide img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain; 
+  border-radius: 12px;
+}
+
+.gallery-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 12px;
+  border-radius: 50%;
+  z-index: 10;
+  user-select: none;
+}
+
+.gallery-btn.prev {
+  left: 10px;
+}
+.gallery-btn.next {
+  right: 10px;
+}
+
+
+
+
+.main-image img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* === Content === */
+.description h3,
+.description h4 {
+  font-size: 1.1rem; 
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 4px;
+  text-transform: none; 
+}
+
+.description p,
+.description em {
+  margin-top: 0;
+  margin-bottom: 14px;
+  line-height: 1.6;
+  color: #555;
+  max-width: 70ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* === Booking card === */
+.booking-card {
+  background: #f7f7f7;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+
+/* === Form === */
+.booking-form {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.booking-form label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  color: #444;
+  font-weight: bold;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #3BD2C9;
+  border-radius: 20px;
+  font-size: 14px;
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
+}
+
+.booking-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+#optional-request {
+  height: 4em;
+  resize: vertical;
+  font-family: inherit;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  line-height: 1.4em;
+}
+
+/* buttons */
+.check-btn,
+.whatsapp-btn,
+.email-btn {
+  width: 100%;
+  background-color: #3BD2C9;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.email-btn {
+  background-color: #00bfa6;
+}
+
+.check-btn:hover,
+.whatsapp-btn:hover,
+.email-btn:hover {
+  background-color: #18b7ac;
+}
+
+.check-btn:active {
+  transform: scale(0.98);
+}
+
+/* === Contact icons === */
+.icon-links {
+  position: fixed;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  background-color: #fffdfd;
+  text-align: center;
+  padding: 8px 0;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  height: 60px; /* imposta un’altezza fissa */
+}
+
+.icon-links img {
+  height: 100%;
+  max-height: 40px;
+  width: auto;
+  vertical-align: middle;
+}
+
+/* === Responsive === */
+@media (max-width: 600px) {
+  body {
+    padding: 12px;
+  }
+
+  .container {
+    padding: 0 12px;
+    max-width: 100%;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .booking-form {
+    padding: 15px;
+  }
+}
+
+
+/* === Pickaday Theme  === */
+
+/* Header: mese + anno */
+.pika-title {
+  background-color: white;
+  color: #3BD2C9;
+  border-radius: 12px 12px 0 0;
+  padding: 8px 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Label mese/anno dropdown */
+.pika-label {
+  color: #32b3aa;
+  font-weight: bold;
+}
+
+/* Frecce navigazione mese */
+.pika-prev,
+.pika-next {
+  color: white;
+  background-color: transparent;
+  font-size: 18px;
+}
+
+/* Giorno selezionato */
+.pika-single .is-selected .pika-button {
+  background: #3BD2C9;
+  color: white;
+  border-radius: 8px;
+}
+
+/* Giorno attivo (oggi) */
+.pika-single .is-today .pika-button {
+  color: #3BD2C9;
+  font-weight: bold;
+  border-bottom: 2px solid #3BD2C9;
+}
+
+/* Disabilita hover su mobile (facoltativo: safe per mobile-first) */
+.pika-button:hover {
+  background: #3BD2C9;
+  color: white;
+}
+
+.footer {
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  background-color: #fffdfd;
+  text-align: center;
+  padding: 8px 0;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  height: 60px; /* imposta un’altezza fissa */
+}
+
+.footer img {
+  height: 100%;
+  max-height: 40px;
+  width: auto;
+  vertical-align: middle;
+}
+
+/* === License css === */
+
+#attribution-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  max-height: 400px;
+  overflow-y: auto;
+  transition: max-height 0.3s ease;
+}
+
+.license-btn {
+  width: 100%;
+  background-color: white;
+  border: 2px solid #3BD2C9;
+  color: #3BD2C9;
+  font-weight: bold;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* ✅ Colori FISSI */
+#toggle-attribution {
+  background-color: white;
+  color: #3BD2C9;
+  border: 2px solid #3BD2C9;
+}
+
+/* ✅ Hover con contrasto visibile */
+#toggle-attribution:hover {
+  border: 2px solid #3BD2C9;
+  background-color: white;
+  color: #3BD2C9;
+}
+
+/* ✅ Testo flessibile senza allargare bottone */
+#toggle-text {
+  /* flex-grow: 1; */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ✅ Icona che ruota */
+.arrow-down {
+  transition: transform 0.3s ease;
+}
+
+.arrow-up {
+  transform: rotate(180deg);
+}
+
+.inline-icon {
+  height: 1em;
+  vertical-align: -0.15em;
+}
+
+/* Box nascosto/stilizzato */
+/* Box nascosto/stilizzato */
+.info-box {
+  background-color: #f2f2f2; /* grigio chiaro */
+  padding: 15px 20px;
+  border-radius: 20px; /* come i bottoni */
+  margin-top: 10px;
+  font-family: Arial, sans-serif;
+  border: 2px solid #3BD2C9; /* aggiunge il bordo come i bottoni */
+  box-sizing: border-box;
+}
+
+.info-box ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.info-box li {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.info-box .icon {
+  margin-right: 8px;
+}
+
+/* Nasconde il box all’avvio */
+.hidden {
+  display: none;
+}
+
+/* Bottone dettagli simile al tuo license-btn */
+.toggle-btn {
+  width: 100%;
+  background-color: white;
+  border: 2px solid #3BD2C9;
+  color: #3BD2C9;
+  font-weight: bold;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Hover bottone */
+.toggle-btn:hover {
+  background-color: white;
+  color: #3BD2C9;
+  border: 2px solid #3BD2C9;
+}
+
+/* Icona che ruota */
+.arrow-down {
+  transition: transform 0.3s ease;
+}
+
+.arrow-up {
+  transform: rotate(180deg);
+}
+
+/* Icona inline all’interno del testo */
+.inline-icon {
+  height: 1em;
+  vertical-align: -0.15em;
+}
+
+#menu-toggle-btn {
+  background-color: white;
+  color: #3BD2C9;
+  border: 2px solid #3BD2C9;
+}
+
+#menu-toggle-btn:hover {
+  border: 2px solid #3BD2C9;
+  background-color: white;
+  color: #3BD2C9;
+}
+
+.map-wine {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #3BD2C9;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 20px auto;
+  max-width: 120px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.map-wine:hover {
+  background-color: #f0f9f9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(59, 210, 201, 0.2);
+}
+
+.map-wine a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.map-wine img {
+  width: 65px;
+  height: auto;
+}
+
+.map-wine span {
+  display: block;
+  margin-top: 8px;
+  font-size: 16px;
+  color: #3BD2C9;
+  font-weight: bold;
+  text-align: center;
+}
