@@ -85,10 +85,7 @@ class ProgressiveImageLoader {
     element.style.backgroundImage = `url(${lqipSrc})`;
     element.classList.add('lqip-loading');
     
-    // Preload HD (con controllo duplicati)  
-    this.preloadImage(hdSrc, srcset, sizes);
-    
-    // Dopo il preload, ripristina l'immagine originale e rimuovi blur
+    // Sempre usa il metodo Image() per garantire il caricamento corretto
     const img = new Image();
     
     if (srcset) {
@@ -99,25 +96,41 @@ class ProgressiveImageLoader {
     }
     
     img.onload = () => {
-      // Imposta esplicitamente l'immagine HD con tutte le proprietà CSS
-      element.style.backgroundImage = `url(${hdSrc})`;
-      element.style.backgroundRepeat = 'no-repeat';
-      element.style.backgroundPosition = 'center center';
-      element.style.backgroundSize = 'cover';
+      // Controlla se l'immagine HD è preloadata per decidere il timing
+      const isHdPreloaded = this.isImagePreloaded(hdSrc);
+      const delay = isHdPreloaded ? 150 : 0; // Delay più breve per immagini preloadata
       
-      // Rimuovi completamente il filtro invece di impostarlo a none
-      element.style.filter = '';
-      element.classList.remove('lqip-loading');
-      element.classList.add('hd-loaded');
+      setTimeout(() => {
+        // Imposta esplicitamente l'immagine HD con tutte le proprietà CSS
+        element.style.backgroundImage = `url(${hdSrc})`;
+        element.style.backgroundRepeat = 'no-repeat';
+        element.style.backgroundPosition = 'center center';
+        element.style.backgroundSize = 'cover';
+        
+        // Rimuovi completamente il filtro invece di impostarlo a none
+        element.style.filter = '';
+        element.classList.remove('lqip-loading');
+        element.classList.add('hd-loaded');
+      }, delay);
     };
     
     img.onerror = () => {
       console.warn('Failed to load HD image:', hdSrc);
-      element.style.backgroundImage = '';
+      // In caso di errore, ripristina l'immagine originale dal CSS
+      if (originalBg !== 'none') {
+        element.style.backgroundImage = originalBg;
+      } else {
+        element.style.backgroundImage = `url(${hdSrc})`; // Prova comunque
+      }
       element.style.filter = '';
       element.classList.remove('lqip-loading');
       element.classList.add('hd-error');
     };
+    
+    // Preload HD se non è già preloadata
+    if (!this.isImagePreloaded(hdSrc)) {
+      this.preloadImage(hdSrc, srcset, sizes);
+    }
     
     img.src = hdSrc;
   }
