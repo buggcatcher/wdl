@@ -78,12 +78,17 @@ class ProgressiveImageLoader {
 
   // Applica il caricamento progressivo a un elemento
   applyProgressiveLoading(element, lqipSrc, hdSrc, srcset = null, sizes = null) {
-    // Salva l'immagine originale se presente nel CSS
-    const originalBg = getComputedStyle(element).backgroundImage;
+    // Per banner con CSS background già impostato, non modificare l'LQIP
+    const isCssBanner = element.classList.contains('banner') && !element.hasAttribute('data-progressive-image');
     
-    // Applica LQIP temporaneamente solo per l'effetto blur
-    element.style.backgroundImage = `url(${lqipSrc})`;
-    element.classList.add('lqip-loading');
+    if (!isCssBanner) {
+      // Salva l'immagine originale se presente nel CSS
+      const originalBg = getComputedStyle(element).backgroundImage;
+      
+      // Applica LQIP temporaneamente solo per l'effetto blur
+      element.style.backgroundImage = `url(${lqipSrc})`;
+      element.classList.add('lqip-loading');
+    }
     
     // Preload HD (con controllo duplicati)  
     this.preloadImage(hdSrc, srcset, sizes);
@@ -99,23 +104,30 @@ class ProgressiveImageLoader {
     }
     
     img.onload = () => {
-      // Imposta esplicitamente l'immagine HD con tutte le proprietà CSS
-      element.style.backgroundImage = `url(${hdSrc})`;
-      element.style.backgroundRepeat = 'no-repeat';
-      element.style.backgroundPosition = 'center center';
-      element.style.backgroundSize = 'cover';
-      
-      // Rimuovi completamente il filtro invece di impostarlo a none
-      element.style.filter = '';
-      element.classList.remove('lqip-loading');
-      element.classList.add('hd-loaded');
+      if (isCssBanner) {
+        // Per banner CSS, usa la classe hd-loaded
+        element.classList.add('hd-loaded');
+      } else {
+        // Imposta esplicitamente l'immagine HD con tutte le proprietà CSS
+        element.style.backgroundImage = `url(${hdSrc})`;
+        element.style.backgroundRepeat = 'no-repeat';
+        element.style.backgroundPosition = 'center center';
+        element.style.backgroundSize = 'cover';
+        
+        // Rimuovi completamente il filtro invece di impostarlo a none
+        element.style.filter = '';
+        element.classList.remove('lqip-loading');
+        element.classList.add('hd-loaded');
+      }
     };
     
     img.onerror = () => {
       console.warn('Failed to load HD image:', hdSrc);
-      element.style.backgroundImage = '';
-      element.style.filter = '';
-      element.classList.remove('lqip-loading');
+      if (!isCssBanner) {
+        element.style.backgroundImage = '';
+        element.style.filter = '';
+        element.classList.remove('lqip-loading');
+      }
       element.classList.add('hd-error');
     };
     
