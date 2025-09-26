@@ -426,8 +426,18 @@
 
 /* Progressive Image Loading */
 .lqip-loading {
-  filter: blur(20px);
+  filter: blur(20px) !important;
   transition: filter 0.5s ease;
+}
+
+.hd-loaded {
+  filter: none !important;
+}
+
+/* Override per garantire che il progressive loader funzioni */
+.banner.lqip-loading,
+.banner.hd-loaded {
+  background: none !important;
 }
 
 /* Classi rimosse - gestione tramite JavaScript per evitare conflitti di rendering */

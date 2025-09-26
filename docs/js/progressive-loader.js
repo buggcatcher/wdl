@@ -8,8 +8,20 @@ class ProgressiveImageLoader {
     this.observer = null;
     
     // Rileva automaticamente i path basandosi sulla profondità della pagina
-    const depth = window.location.pathname.split('/').filter(x => x !== '').length - 1;
-    const prefix = depth > 0 ? '../'.repeat(depth) : '';
+    let pathname = window.location.pathname;
+    // Rimuovi il prefisso /docs/ se presente per calcoli corretti
+    if (pathname.startsWith('/docs/')) {
+      pathname = pathname.replace('/docs/', '/');
+    }
+    
+    const depth = pathname.split('/').filter(x => x !== '').length;
+    // Per index.html depth dovrebbe essere 1, per boxes/file.html dovrebbe essere 2
+    const actualDepth = depth > 1 ? depth - 1 : 0;
+    const prefix = actualDepth > 0 ? '../'.repeat(actualDepth) : '';
+    
+    console.log('Path detection - original pathname:', window.location.pathname);
+    console.log('Path detection - cleaned pathname:', pathname);
+    console.log('Path detection - depth:', depth, 'actualDepth:', actualDepth, 'prefix:', prefix);
     
     this.lqipImage = `${prefix}assets/img/headers/blurred_mini_header.jpeg`;
     this.hdImage = `${prefix}assets/img/headers/header-1920x1080.jpeg`;
@@ -64,75 +76,46 @@ class ProgressiveImageLoader {
       }
     });
 
-    // Poi gestisci i banner standard che usano header-1920x1080.jpeg
+    // Poi gestisci TUTTI i banner standard (non controllo più il CSS)
     bannersWithStandardBg.forEach(banner => {
       // Evita di processare banner che hanno già data-progressive-image
       if (banner.hasAttribute('data-progressive-image')) return;
 
-      const currentBg = getComputedStyle(banner).backgroundImage;
-      if (currentBg && currentBg.includes('header-1920x1080')) {
-        this.applyProgressiveLoading(banner, this.lqipImage, this.hdImage);
-      }
+      // Applica sempre il progressive loading a tutti i banner
+      this.applyProgressiveLoading(banner, this.lqipImage, this.hdImage);
     });
   }
 
   // Applica il caricamento progressivo a un elemento
   applyProgressiveLoading(element, lqipSrc, hdSrc, srcset = null, sizes = null) {
-    // Salva l'immagine originale se presente nel CSS
-    const originalBg = getComputedStyle(element).backgroundImage;
+    console.log('Applying progressive loading:', lqipSrc, '->', hdSrc);
     
-    // Applica LQIP temporaneamente solo per l'effetto blur
-    element.style.backgroundImage = `url(${lqipSrc})`;
+    // Step 1: Mostra immediatamente l'immagine blurred
+    element.style.setProperty('background-image', `url(${lqipSrc})`, 'important');
+    element.style.setProperty('background-repeat', 'no-repeat', 'important');
+    element.style.setProperty('background-position', 'center center', 'important');
+    element.style.setProperty('background-size', 'cover', 'important');
     element.classList.add('lqip-loading');
     
-    // Sempre usa il metodo Image() per garantire il caricamento corretto
-    const img = new Image();
+    console.log('Step 1 - Blur applied, element style:', element.style.backgroundImage);
     
-    if (srcset) {
-      img.srcset = srcset;
-    }
-    if (sizes) {
-      img.sizes = sizes;
-    }
-    
-    img.onload = () => {
-      // Controlla se l'immagine HD è preloadata per decidere il timing
-      const isHdPreloaded = this.isImagePreloaded(hdSrc);
-      const delay = isHdPreloaded ? 150 : 0; // Delay più breve per immagini preloadata
-      
+    // Step 2: Siccome le immagini sono prelodate, transizione immediata
+    // Usa requestAnimationFrame per garantire che il blur sia renderizzato prima
+    requestAnimationFrame(() => {
       setTimeout(() => {
-        // Imposta esplicitamente l'immagine HD con tutte le proprietà CSS
-        element.style.backgroundImage = `url(${hdSrc})`;
-        element.style.backgroundRepeat = 'no-repeat';
-        element.style.backgroundPosition = 'center center';
-        element.style.backgroundSize = 'cover';
-        
-        // Rimuovi completamente il filtro invece di impostarlo a none
+        console.log('Step 2 - Switching to HD');
+        // Passa direttamente all'immagine HD con !important
+        element.style.setProperty('background-image', `url(${hdSrc})`, 'important');
+        element.style.setProperty('background-repeat', 'no-repeat', 'important');
+        element.style.setProperty('background-position', 'center center', 'important');
+        element.style.setProperty('background-size', 'cover', 'important');
         element.style.filter = '';
         element.classList.remove('lqip-loading');
         element.classList.add('hd-loaded');
-      }, delay);
-    };
-    
-    img.onerror = () => {
-      console.warn('Failed to load HD image:', hdSrc);
-      // In caso di errore, ripristina l'immagine originale dal CSS
-      if (originalBg !== 'none') {
-        element.style.backgroundImage = originalBg;
-      } else {
-        element.style.backgroundImage = `url(${hdSrc})`; // Prova comunque
-      }
-      element.style.filter = '';
-      element.classList.remove('lqip-loading');
-      element.classList.add('hd-error');
-    };
-    
-    // Preload HD se non è già preloadata
-    if (!this.isImagePreloaded(hdSrc)) {
-      this.preloadImage(hdSrc, srcset, sizes);
-    }
-    
-    img.src = hdSrc;
+        
+        console.log('Step 2 - HD applied, element style:', element.style.backgroundImage);
+      }, 30); // Delay ridotto a 30ms - quasi impercettibile ma visibile
+    });
   }
 
   // Lazy loading per altre immagini
